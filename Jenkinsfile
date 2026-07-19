@@ -1,68 +1,56 @@
 pipeline {
     agent any
 
+    environment {
+        PROJECT_NAME = "DevOps Git Lab"
+    }
+
     stages {
 
-        stage('Repository Information') {
+        stage('Repository Info') {
             steps {
-                echo 'Repository cloned successfully!'
+                echo "Project: ${PROJECT_NAME}"
             }
         }
 
         stage('Workspace') {
             steps {
                 sh 'pwd'
-            }
-        }
-
-        stage('List Files') {
-            steps {
                 sh 'ls -la'
             }
         }
 
-        stage('Read README') {
-            steps {
-                sh 'cat README.md'
-            }
-        }
-
-        stage('Git Information') {
+        stage('Git Info') {
             steps {
                 sh 'git branch'
-                sh 'git log --oneline -3'
+                sh 'git log --oneline -5'
             }
         }
-        stage('Environment Information') {
-        steps {
-         sh 'echo "Current Date:"'
-        sh 'date'
 
-        sh 'echo "Current Directory:"'
-        sh 'pwd'
+        stage('Environment') {
+            steps {
+                sh 'echo "Date:"'
+                sh 'date'
 
-        sh 'echo "Disk Usage:"'
-        sh 'df -h'
-
-        sh 'echo "Memory Information:"'
-        sh 'free -h || true'
-    }
-}
+                sh 'echo "Hostname:"'
+                sh 'hostname'
+            }
+        }
 
     }
 
     post {
 
-        always {
-            echo 'Cleaning up...'
-        }
-
         success {
-            echo 'Pipeline executed successfully!'
+            echo 'Build Successful!'
         }
 
         failure {
-            echo 'Pipeline failed.'
+            echo 'Build Failed!'
+        }
+
+        always {
+            echo 'Pipeline Finished.'
         }
 
     }
