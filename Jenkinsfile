@@ -33,6 +33,21 @@ pipeline {
                 sh 'git log --oneline -3'
             }
         }
+        stage('Environment Information') {
+        steps {
+         sh 'echo "Current Date:"'
+        sh 'date'
+
+        sh 'echo "Current Directory:"'
+        sh 'pwd'
+
+        sh 'echo "Disk Usage:"'
+        sh 'df -h'
+
+        sh 'echo "Memory Information:"'
+        sh 'free -h || true'
+    }
+}
 
     }
 
